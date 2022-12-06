@@ -2,7 +2,7 @@
 
 First try of JavaScript via https://adventofcode.com/
 
-Never tried JS. 
+Never tried JS. Has been interesting...
 
 TODO: 
 - [] I mixed up Day 1 part one and two - does it matter?
