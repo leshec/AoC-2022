@@ -22,6 +22,7 @@ function duplicate(s1, s2, s3){
             }
         }
 
+//alternative priority.slice(0,3).sum() or similar
 function checker(data){
     while(counter < data.length -3){
         priority = duplicate(data[counter], data[counter+1], data[counter+2]);
