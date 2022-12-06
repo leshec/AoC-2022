@@ -14,6 +14,8 @@ data = syncReadFile('./input.txt');
 data.forEach( s => { 
 
     if(s !== ""){
+        //use better names than 'words' more relevant to context
+        //This is splitting clean up zones for example
         const words = s.split(',');
         //console.log(words);
 
@@ -21,6 +23,7 @@ data.forEach( s => {
         const numbers1 = words[0].split("-");
         const numbers2 = words[1].split("-");
       
+        //alternatively, can i destructure array [a,b] = slice(0,1)...worth it?
         let a = parseInt(numbers1[0]);
         let b = parseInt(numbers1[1]);
         let c = parseInt(numbers2[0]);
