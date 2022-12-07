@@ -1,22 +1,25 @@
  //get input
-
+/*
+ *
 const {readFileSync, promises: fsPromises} = require('fs');
 function syncReadFile(filename) {
     const contents = readFileSync(filename, 'utf-8');
     const data = contents.split(/\r?\n/);
 }
 
-data = syncReadFile('./input.txt');
+data = syncReadFile('./test_data.txt');
 
-
+*/
 //need a parser
+//psuedo code
 
 
 //create node
 class TreeNode {
-  constructor(key, value = key, parent = null) {
+  constructor(key, value = key, type, parent = null) {
     this.key = key;
     this.value = value;
+    this.type = type; 
     this.parent = parent;
     this.children = [];
   }
@@ -31,8 +34,8 @@ class TreeNode {
 }
 
 class Tree {
-  constructor(key, value = key) {
-    this.root = new TreeNode(key, value);
+  constructor(key, value = key, type="dir") {
+    this.root = new TreeNode(key, value, type);
   }
 
   *preOrderTraversal(node = this.root) {
@@ -53,10 +56,10 @@ class Tree {
     yield node;
   }
 
-  insert(parentNodeKey, key, value = key) {
+  insert(parentNodeKey, key, value = key, type) {
     for (let node of this.preOrderTraversal()) {
       if (node.key === parentNodeKey) {
-        node.children.push(new TreeNode(key, value, node));
+        node.children.push(new TreeNode(key, value, type, node));
         return true;
       }
     }
@@ -87,27 +90,48 @@ class Tree {
 
 //create a tree
 
-const tree = new Tree(1, 'AB');
+const tree = new Tree('root', 256, "dir");
 
-tree.insert(1, 11, 'AC');
-tree.insert(1, 12, 'BC');
-tree.insert(12, 121, 'BG');
+tree.insert('root', 'a', 4546464, "dir");
+tree.insert('root', 'b', 6565, "dir");
+tree.insert('root', 'c', 7676, "dir");
+tree.insert('c', 'd', 23, "file"); 
+tree.insert('b', 'e', 123, "file");
 
 [...tree.preOrderTraversal()].map(x => x.value);
 // ['AB', 'AC', 'BC', 'BCG']
 
+/*
 tree.root.value;              // 'AB'
 tree.root.hasChildren;        // true
 
-tree.find(12).isLeaf;         // false
-tree.find(121).isLeaf;        // true
-tree.find(121).parent.value;  // 'BC'
+tree.find(2).isLeaf;         // false
+tree.find(5).isLeaf;        // true
+tree.find(31).parent.value;  // 'BC'
+*/
+    
+tree.remove('b');
 
-tree.remove(12);
+
+console.log(tree.find('root').value, " is the value of root", tree.find('root').type, " is the type");
+
+console.log(tree.find('a').value, " is the value of a", tree.find('a').type, " is the type");
+//console.log(tree.find('b').value, " is the value of b", tree.find('b').type, " is the type");
+console.log(tree.find('c').value, " is the value of c", tree.find('c').type, " is the type");
+console.log(tree.find('d').value, " is the value of d", tree.find('d').type, " is the type");
+//console.log(tree.find('e').value, " is the value of e", tree.find('e').type, " is the type");
+
+
+
+
+
+
 
 //think need this one for search
 [...tree.postOrderTraversal()].map(x => x.value);
 // ['AC', 'AB']
+
+console.log([...tree.postOrderTraversal()].map(x => x.value));
 
 
 //need to process the yield node to get values
@@ -119,3 +143,5 @@ tree.remove(12);
 https://www.30secondsofcode.org/articles/s/common-regexp-cheatsheet
 https://www.30secondsofcode.org/articles/s/js-data-structures-tree
 */
+
+console.log(tree);
