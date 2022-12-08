@@ -162,22 +162,22 @@ function parse(current, previous, next){
 
     data.forEach( line  => { 
      // ... do something with s ...
-       const parts = line.split(','); 
+       const parts = line.split(" "); 
                 //console.log("start character is:", parts[0]);
                 if(parts[0].match(isFile)){
-                    console.log("file", parts[0]);
+                    console.log("file", parts[1]);
                 }
                 if(parts[0].match(isDir)){
-                    console.log("dir", parts[0]);
+                    console.log("dir", parts[1]);
                 }
                 if(parts[0].match(isRoot)){
-                    console.log("root", parts[0]);
+                    console.log("root", parts[1]);
                 } 
                 if(parts[0].match(isLs)){
-                    console.log("ls", parts[0]);
+                    console.log("ls", parts[1]);
                 } 
                 if(parts[0].match(isGoUp)){
-                    console.log("cd ..", parts[0]);
+                    console.log("cd ..", parts[1]);
                 } 
                 if(parts[0].match(isCd)){
                     console.log("cd to some need to add a field", parts[0]);
