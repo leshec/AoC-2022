@@ -4,11 +4,11 @@ let current; //this node
 let previous; //parent node
 let next; //child node
 const isFile = /^[0-9]/;
-const isDir = /^dir/;
-const isRoot = /'^cd'/;
-const isLs = /^ls$/;
-const isGoUp = /^cd$/;
-const isCd = /^cd/
+const isDir = 'dir';
+const isRoot = '/';
+const isLs = 'ls';
+const cd = 'cd';
+const dotDot= '..'
 
 
 const {readFileSync, promises: fsPromises} = require('fs');
@@ -176,10 +176,10 @@ function parse(current, previous, next){
                 if(parts[0].match(isLs)){
                     console.log("ls", parts[1]);
                 } 
-                if(parts[0].match(isGoUp)){
+                if(parts[0] === 'cd' && parts[1] === '..'){
                     console.log("cd ..", parts[1]);
                 } 
-                if(parts[0].match(isCd)){
+                if(parts[0].match(cd)){
                     console.log("cd to some need to add a field", parts[0]);
                 } 
 } );
