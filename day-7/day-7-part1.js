@@ -1,17 +1,24 @@
- //get input
-/*
- *
+//globals
+//
+let current; //this node
+let previous; //parent node
+let next; //child node
+const isFile = /^[0-9]/;
+const isDir = /^dir/;
+const isRoot = /'^cd'/;
+const isLs = /^ls$/;
+const isGoUp = /^cd$/;
+const isCd = /^cd/
+
+
 const {readFileSync, promises: fsPromises} = require('fs');
 function syncReadFile(filename) {
     const contents = readFileSync(filename, 'utf-8');
-    const data = contents.split(/\r?\n/);
+    const data = contents.split(/\r?\n/).filter(Boolean);
+    return data;
 }
 
 data = syncReadFile('./test_data.txt');
-
-*/
-//need a parser
-//psuedo code
 
 
 //create node
@@ -31,7 +38,7 @@ class TreeNode {
   get hasChildren() {
     return !this.isLeaf;
   }
-}
+   }
 
 class Tree {
   constructor(key, value = key, type="dir") {
@@ -83,20 +90,18 @@ class Tree {
     }
     return undefined;
   }
-}
-
-
-
+    }
 
 //create a tree
 
-const tree = new Tree('root', 256, "dir");
+const tree = new Tree('/', 256, "dir");
 
-tree.insert('root', 'a', 4546464, "dir");
-tree.insert('root', 'b', 6565, "dir");
-tree.insert('root', 'c', 7676, "dir");
+tree.insert('/', 'a', 4546464, "dir");
+tree.insert('/', 'b', 6565, "dir");
+tree.insert('/', 'c', 7676, "dir");
 tree.insert('c', 'd', 23, "file"); 
-tree.insert('b', 'e', 123, "file");
+tree.insert('b', 'e', 69, "file");
+
 
 [...tree.preOrderTraversal()].map(x => x.value);
 // ['AB', 'AC', 'BC', 'BCG']
@@ -110,10 +115,10 @@ tree.find(5).isLeaf;        // true
 tree.find(31).parent.value;  // 'BC'
 */
     
-tree.remove('b');
+//tree.remove('b');
 
 
-console.log(tree.find('root').value, " is the value of root", tree.find('root').type, " is the type");
+console.log(tree.find('/').value, " is the value of root", tree.find('/').type, " is the type");
 
 console.log(tree.find('a').value, " is the value of a", tree.find('a').type, " is the type");
 //console.log(tree.find('b').value, " is the value of b", tree.find('b').type, " is the type");
@@ -145,3 +150,42 @@ https://www.30secondsofcode.org/articles/s/js-data-structures-tree
 */
 
 console.log(tree);
+
+console.log("parent of b is: ", tree.find('b').parent.key);
+
+
+//parser
+//
+function parse(current, previous, next){
+    
+    current = '/';
+
+    data.forEach( line  => { 
+     // ... do something with s ...
+       const parts = line.split(','); 
+                //console.log("start character is:", parts[0]);
+                if(parts[0].match(isFile)){
+                    console.log("file", parts[0]);
+                }
+                if(parts[0].match(isDir)){
+                    console.log("dir", parts[0]);
+                }
+                if(parts[0].match(isRoot)){
+                    console.log("root", parts[0]);
+                } 
+                if(parts[0].match(isLs)){
+                    console.log("ls", parts[0]);
+                } 
+                if(parts[0].match(isGoUp)){
+                    console.log("cd ..", parts[0]);
+                } 
+                if(parts[0].match(isCd)){
+                    console.log("cd to some need to add a field", parts[0]);
+                } 
+} );
+    
+}
+
+parse();
+
+
